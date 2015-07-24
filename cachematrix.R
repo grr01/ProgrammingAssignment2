@@ -1,28 +1,34 @@
+## function to compare if 2 matrix are equal or not
+## Return TRUE or FALSE
+matequal <- function(x, y) {
+	    is.matrix(x) && is.matrix(y) && dim(x) == dim(y) && all(x == y)
+}		
+
 ## makeCacheMatrix: This function creates a special "matrix" object that can cache its inverse.
 ##                  makeCacheMatrix return a special "vector", which is really a list containing a function to
-##                  set the value of the vector
-##                  get the value of the vector
-##                  set the value of the matrix
+##                  set the value of the matrix`
 ##                  get the value of the matrix
+##                  set the value of the inversed matrix
+##                  get the value of the inversed matrix
 ##
 ## Parm: 			A matrix
 ##
 
-makeCacheMatrix <- function(x = matrix()) {
+makeCacheMatrix <- function(y = matrix()) {
         m <- NULL
-        set <- function(y) {
+        set <- function(y = matrix()) x <<- y
                 x <<- y
                 m <<- NULL
         }
         get <- function() x
-        setmatrix <- function(solve) m <<- solve
-        getmatrix <- function() m
+        setsolve <- function(ySolve= matrix()) m <<- ySolve
+        getsolve <- function() m
         list(set = set, 
 		     get = get,
-             setmatrix = setmatrix,
-             getmatrix = getmatrix)
-
+             setsolve = setsolve,
+             getsolve = getsolve)
 }
+
 
 ## cacheSolve: 
 ## 
@@ -33,20 +39,24 @@ makeCacheMatrix <- function(x = matrix()) {
 ## Return a matrix that is the inverse of 'x'
 ##
 
-cacheSolve <- function(x, ...) {
-   
-        ## Validate if we do need to compute or if we can use the one cached
-        m <- x$getmatrix()
+cacheSolve <- function(x = matrix(), ...) {
+        
+        ## Validate if we do have one in cache
+        m <- z$getsolve()
         if(!is.null(m)) {
-				## let use the one cache
-                message("getting cached matrix")
-                return(m)
+		        ## Validate if this is the same matrix as the one in the cache
+				if (matequal(x,z$get()))
+				{
+				        ## let use the one cache
+                        message("getting cached matrix")
+                        return(m)
+				}
         }
-		## Let Calculate it
-        data <- x$get()
-        m <- solve(data, ...)
+
+        m <- solve(x, ...)
 		## Cache it
-        x$setmatrix(m)
+		z$set(x)
+        z$setsolve(m)
         m
 }		
 
