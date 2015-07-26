@@ -1,7 +1,7 @@
 ## function to compare if 2 matrix are equal or not
 ## Return TRUE or FALSE
 matequal <- function(x, y) {
-	    is.matrix(x) && is.matrix(y) && dim(x) == dim(y) && all(x == y)
+        is.matrix(x) && is.matrix(y) && dim(x) == dim(y) && all(x == y)
 }		
 
 ## makeCacheMatrix: This function creates a special "matrix" object that can cache its inverse.
@@ -16,7 +16,7 @@ matequal <- function(x, y) {
 
 makeCacheMatrix <- function(y = matrix()) {
         m <- NULL
-        set <- function(y = matrix()) x <<- y
+        set <- function(y = matrix()){
                 x <<- y
                 m <<- NULL
         }
@@ -24,7 +24,7 @@ makeCacheMatrix <- function(y = matrix()) {
         setsolve <- function(ySolve= matrix()) m <<- ySolve
         getsolve <- function() m
         list(set = set, 
-		     get = get,
+      	     get = get,
              setsolve = setsolve,
              getsolve = getsolve)
 }
@@ -45,17 +45,17 @@ cacheSolve <- function(x = matrix(), ...) {
         m <- z$getsolve()
         if(!is.null(m)) {
 		        ## Validate if this is the same matrix as the one in the cache
-				if (matequal(x,z$get()))
-				{
-				        ## let use the one cache
+				        if (matequal(x,z$get()))
+				        {
+				                ## let use the one cache
                         message("getting cached matrix")
                         return(m)
-				}
+				        }
         }
 
         m <- solve(x, ...)
-		## Cache it
-		z$set(x)
+        ## Cache it
+		    z$set(x)
         z$setsolve(m)
         m
 }		
