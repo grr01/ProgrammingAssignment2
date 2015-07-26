@@ -14,7 +14,7 @@ matequal <- function(x, y) {
 ## Parm: 			A matrix
 ##
 
-makeCacheMatrix <- function(y = matrix()) {
+makeCacheMatrix <- function(z) {
         m <- NULL
         set <- function(y = matrix()){
                 x <<- y
