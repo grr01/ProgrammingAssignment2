@@ -45,12 +45,12 @@ cacheSolve <- function(x = matrix(), ...) {
         m <- z$getsolve()
         if(!is.null(m)) {
 		        ## Validate if this is the same matrix as the one in the cache
-				if (matequal(x,z$get()))
-				{
-				    ## let use the one cache
-                    message("getting cached matrix")
-                    return(m)
-				}
+            if (matequal(x,z$get()))
+            {
+                ## let use the one cache
+                message("getting cached matrix")
+                return(m)
+            }
         }
 
         m <- solve(x, ...)
